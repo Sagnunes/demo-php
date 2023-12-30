@@ -5,7 +5,9 @@ require 'router.php';
 require 'Database.php';
 
 $config = require('config.php');
-
 $db = new Database($config['database']);
 
-$db->query('SELECT * FROM posts')->fetchAll(PDO::FETCH_ASSOC);
+$id = $_GET['id'];
+$query = 'SELECT * FROM posts where id = :id';
+
+$db->query($query, ['id' => $id])->fetchAll(PDO::FETCH_ASSOC);
