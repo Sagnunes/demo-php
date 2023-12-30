@@ -2,13 +2,14 @@
 
 class Database
 {
-    private string $dsn = 'mysql:host=localhost;port=3306;dbname=demo;user=root;charset=utf8mb4';
     private PDO $connection;
 
-    public function __construct()
+    public function __construct($config, $username = 'root', $password = '')
     {
+        $dsn = 'mysql:' . http_build_query($config, '', ';');
+
         try {
-            $this->connection = new PDO($this->dsn);
+            $this->connection = new PDO($dsn, $username, $password, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
         } catch (PDOException $exception) {
             dd($exception);
         }
